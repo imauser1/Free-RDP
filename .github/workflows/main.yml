@@ -16,33 +16,11 @@ jobs:
           cmd /c Downloads.bat
 
       - name: Log In To AnyDesk
-        run: |
-          Start-Process cmd -ArgumentList "/c show.bat" -NoNewWindow
-          Start-Sleep -Seconds 10 # Wait for a maximum of 10 seconds
-          Get-Process -Name cmd | Stop-Process -Force # Close the cmd if it's still running
-
-      - name: Download and Extract SSHX
-        run: |
-          # Download SSHX
-          Invoke-WebRequest -Uri "https://sshx.s3.amazonaws.com/sshx-x86_64-pc-windows-msvc.zip" -OutFile "sshx.zip"
-          # Extract the ZIP file
-          Expand-Archive -Path "sshx.zip" -DestinationPath "sshx"
-
-      - name: Run SSHX
-        run: |
-          # Navigate to the extracted directory and run SSHX
-          Set-Location -Path "sshx"
-          # Start sshx and output the URL
-          $process = Start-Process -FilePath ".\sshx.exe" -ArgumentList "run" -PassThru
-          # Wait for a moment to ensure the process starts
-          Start-Sleep -Seconds 5
-          # Output the URL from the console (assuming it displays in the console)
-          Write-Host "SSHX session started. Check the console for the URL."
+        run: cmd /c show.bat
 
       - name: Time Counter
         run: |
           # Change password for installer and runneradmin
-          $env:INSTALLER_PASSWORD = "Admin123"
-          $env:RUNNERADMIN_PASSWORD = "Admin123"
-          # Execute the time.py script
+          $env:INSTALLER_PASSWORD = "Admin1234"
+          $env:RUNNERADMIN_PASSWORD = "Admin1234"
           python time.py
