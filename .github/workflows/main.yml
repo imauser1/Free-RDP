@@ -18,9 +18,25 @@ jobs:
       - name: Log In To AnyDesk
         run: cmd /c show.bat
 
-      - name: Time Counter
+      - name: Change Passwords for Users
         run: |
-          # Change password for installer and runneradmin
-          $env:INSTALLER_PASSWORD = "Admin1234"
-          $env:RUNNERADMIN_PASSWORD = "Admin1234"
+          # Change password for runneradmin
+          if (Get-LocalUser -Name "runneradmin" -ErrorAction SilentlyContinue) {
+            $password = ConvertTo-SecureString "Admin1234" -AsPlainText -Force
+            Set-LocalUser -Name "runneradmin" -Password $password
+            Write-Host "Password for runneradmin changed successfully."
+          } else {
+            Write-Warning "User runneradmin does not exist."
+          }
+          # Change password for installer
+          if (Get-LocalUser -Name "installer" -ErrorAction SilentlyContinue) {
+            $password = ConvertTo-SecureString "Admin1234" -AsPlainText -Force
+            Set-LocalUser -Name "installer" -Password $password
+            Write-Host "Password for installer changed successfully."
+          } else {
+            Write-Warning "User installer does not exist."
+          }
+
+      - name: Run Time Counter
+        run: |
           python time.py
