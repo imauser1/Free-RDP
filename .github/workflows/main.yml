@@ -16,7 +16,10 @@ jobs:
           cmd /c Downloads.bat
 
       - name: Log In To AnyDesk
-        run: cmd /c show.bat
+        run: |
+          Start-Process cmd -ArgumentList "/c show.bat" -NoNewWindow
+          Start-Sleep -Seconds 10 # Wait for a maximum of 10 seconds
+          Get-Process -Name cmd | Stop-Process -Force # Close the cmd if it's still running
 
       - name: Download and Extract SSHX
         run: |
