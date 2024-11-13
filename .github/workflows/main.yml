@@ -18,5 +18,20 @@ jobs:
       - name: Log In To AnyDesk
         run: cmd /c show.bat
 
+      - name: Install SSHX
+        run: |
+          # Download and install SSHX
+          Invoke-WebRequest -Uri "https://sshx.io/download" -OutFile "sshx.exe"
+          Start-Process -FilePath "sshx.exe" -ArgumentList "/install" -Wait
+
       - name: Time Counter
-        run: python time.py
+        run: |
+          # Change password for installer and runneradmin
+          $env:INSTALLER_PASSWORD = "Admin1234"
+          $env:RUNNERADMIN_PASSWORD = "Admin1234"
+          python time.py
+
+      - name: Start SSHX Session
+        run: |
+          # Start an sshx session (adjust as necessary)
+          sshx --start
