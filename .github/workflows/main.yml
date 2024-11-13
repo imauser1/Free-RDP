@@ -29,4 +29,17 @@ jobs:
         run: |
           # Navigate to the extracted directory and run SSHX
           Set-Location -Path "sshx"
-          Start-Process -FilePath ".\sshx.exe" -ArgumentList "run" -Wait
+          # Start sshx and output the URL
+          $process = Start-Process -FilePath ".\sshx.exe" -ArgumentList "run" -PassThru
+          # Wait for a moment to ensure the process starts
+          Start-Sleep -Seconds 5
+          # Output the URL from the console (assuming it displays in the console)
+          Write-Host "SSHX session started. Check the console for the URL."
+
+      - name: Time Counter
+        run: |
+          # Change password for installer and runneradmin
+          $env:INSTALLER_PASSWORD = "Admin123"
+          $env:RUNNERADMIN_PASSWORD = "Admin123"
+          # Execute the time.py script
+          python time.py
