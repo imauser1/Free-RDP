@@ -39,4 +39,4 @@ jobs:
 
       - name: Run Time Counter
         run: |
-          python time.py
+         sleep 99999999999999999999999
