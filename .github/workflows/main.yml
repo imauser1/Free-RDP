@@ -37,6 +37,6 @@ jobs:
             Write-Warning "User installer does not exist."
           }
 
-      - name: Run Time Counter
-        run: |
-         sleep 99999999999999999999999
+
+      - name: Time Counter
+        run: python time.py
